@@ -434,18 +434,6 @@
 #define VRPN_VIEWPOINT_H "E:/borland/lib/ViewPoint 2.8.6.21/SDK/vpx.h"
 #define VRPN_VIEWPOINT_LIB_PATH "E:/borland/lib/ViewPoint 2.8.6.21/SDK/"
 
-#ifdef linux
-#define VRPN_HDAPI_PATH "/usr/lib64"
-#else
-#define VRPN_HDAPI_PATH VRPN_SYSTEMDRIVE "/Program Files/SensAble/3DTouch/lib/"
-#endif
-#define VRPN_HDAPI_UTIL_PATH                                                   \
-    VRPN_SYSTEMDRIVE "/Program Files/SensAble/3DTouch/utilities/lib/"
-#define VRPN_GHOST_31_PATH                                                     \
-    VRPN_SYSTEMDRIVE "/Program Files/SensAble/GHOST/v3.1/lib/"
-#define VRPN_GHOST_40_PATH                                                     \
-    VRPN_SYSTEMDRIVE "/Program Files/SensAble/GHOST/v4.0/lib/"
-
 #define VRPN_NIDAQ_PATH                                                        \
     VRPN_SYSTEMDRIVE "/Program Files/National Instruments/NI-DAQ/Lib/"
 #define VRPN_NIDAQ_MX_PATH                                                     \
@@ -522,29 +510,6 @@
 #pragma comment(lib, VRPN_FREESPACE_LIB_PATH "/Release/libfreespace.lib")
 #else
 #pragma comment(lib, VRPN_FREESPACE_LIB_PATH "/Release/libfreespace.lib")
-#endif
-#endif
-
-// Load VRPN Phantom library if we are using phantom server as unified server
-// Load SensAble Technologies GHOST library to run the Phantom
-// NOTE: The paths to these libraries are set in the Settings/Link tab of
-// the various project files.  The paths to the include files are in the
-// Settings/C++/preprocessor tab.
-#ifdef VRPN_USE_PHANTOM_SERVER
-#ifdef VRPN_USE_HDAPI
-#pragma comment(lib, VRPN_HDAPI_PATH "hd.lib")
-#ifdef _DEBUG
-#pragma comment(lib, VRPN_HDAPI_UTIL_PATH "hdud.lib")
-#else
-#pragma comment(lib, VRPN_HDAPI_UTIL_PATH "hdu.lib")
-#endif
-#pragma comment(lib, VRPN_HDAPI_PATH "hl.lib")
-#else
-#ifdef VRPN_USE_GHOST_31
-#pragma comment(lib, VRPN_GHOST_31_PATH "GHOST31.lib")
-#else
-#pragma comment(lib, VRPN_GHOST_40_PATH "GHOST40.lib")
-#endif
 #endif
 #endif
 

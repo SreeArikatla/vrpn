@@ -194,7 +194,10 @@ find_library(HDAPI_LIBRARY_DEBUG
 	HINTS
 	${_libsearchdirs})
 
-select_library_configurations(HDAPI)
+set( HDAPI_LIBRARY
+  $<$<CONFIG:Release>:${HDAPI_LIBRARY_RELEASE}>
+  $<$<CONFIG:Debug>:${HDAPI_LIBRARY_DEBUG}>
+  )
 
 ###
 # HDAPI: HDU
@@ -217,15 +220,6 @@ find_library(HDAPI_HDU_LIBRARY_RELEASE
 find_library(HDAPI_HDU_LIBRARY_DEBUG
 	NAMES
 	HDU
-	PATH_SUFFIXES
-	DebugAcademicEdition
-	Debug
-	HINTS
-	${_libsearchdirs})
-
-# Fallback
-find_library(HDAPI_HDU_LIBRARY_DEBUG
-	NAMES
 	HDUD
 	PATH_SUFFIXES
 	DebugAcademicEdition
@@ -233,7 +227,10 @@ find_library(HDAPI_HDU_LIBRARY_DEBUG
 	HINTS
 	${_libsearchdirs})
 
-select_library_configurations(HDAPI_HDU)
+set( HDAPI_HDU_LIBRARY
+  $<$<CONFIG:Release>:${HDAPI_HDU_LIBRARY_RELEASE}>
+  $<$<CONFIG:Debug>:${HDAPI_HDU_LIBRARY_DEBUG}>
+  )
 
 if(OPENHAPTICS_NESTED_TARGETS OR NOT HDAPI_HDU_LIBRARY)
 	if(HDAPI_HDU_SOURCE_DIR AND NOT EXISTS "${HDAPI_HDU_SOURCE_DIR}/hdu.cpp")
@@ -292,7 +289,10 @@ find_library(HLAPI_LIBRARY_DEBUG
 	HINTS
 	${_libsearchdirs})
 
-select_library_configurations(HLAPI)
+set( HLAPI_LIBRARY
+  $<$<CONFIG:Release>:${HLAPI_LIBRARY_RELEASE}>
+  $<$<CONFIG:Debug>:${HLAPI_LIBRARY_DEBUG}>
+  )
 
 ###
 # HLAPI: HLU
@@ -315,15 +315,6 @@ find_library(HLAPI_HLU_LIBRARY_RELEASE
 find_library(HLAPI_HLU_LIBRARY_DEBUG
 	NAMES
 	HLU
-	PATH_SUFFIXES
-	DebugAcademicEdition
-	Debug
-	HINTS
-	${_libsearchdirs})
-
-# fallback
-find_library(HLAPI_HLU_LIBRARY_DEBUG
-	NAMES
 	HLUD
 	PATH_SUFFIXES
 	DebugAcademicEdition
@@ -331,7 +322,10 @@ find_library(HLAPI_HLU_LIBRARY_DEBUG
 	HINTS
 	${_libsearchdirs})
 
-select_library_configurations(HLAPI_HLU)
+set( HLAPI_HLU_LIBRARY
+  $<$<CONFIG:Release>:${HLAPI_HLU_LIBRARY_RELEASE}>
+  $<$<CONFIG:Debug>:${HLAPI_HLU_LIBRARY_DEBUG}>
+  )
 
 if(OPENHAPTICS_NESTED_TARGETS OR NOT HLAPI_HLU_LIBRARY)
 	if(HLAPI_HLU_SOURCE_DIR AND NOT EXISTS "${HLAPI_HLU_SOURCE_DIR}/hlu.cpp")
@@ -462,7 +456,6 @@ if(OPENHAPTICS_FOUND)
 		OPENHAPTICS_RUNTIME_LIBRARY_DIRS
 		${OPENHAPTICS_LIBRARY_DIRS})
 
-	clean_library_list(OPENHAPTICS_LIBRARIES)
 
 	mark_as_advanced(OPENHAPTICS_ROOT_DIR)
 endif()
