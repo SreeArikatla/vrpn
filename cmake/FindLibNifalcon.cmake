@@ -45,7 +45,21 @@ find_path(LIBNIFALCON_INCLUDE_DIR
 mark_as_advanced(LIBNIFALCON_INCLUDE_DIR)
 
 set(_deps_check)
-if(NOT WIN32)
+if(WIN32)
+    find_library(LIBNIFALCON_FTD2XX_LIBRARY NAMES libftd2xx ftd2xx)
+    mark_as_advanced(LIBNIFALCON_FTD2XX_LIBRARY)
+
+    get_filename_component(_libdir "${LIBNIFALCON_FTD2XX_LIBRARY}" PATH)
+
+    find_path(LIBNIFALCON_FTD2XX_INCLUDE_DIR
+        NAMES
+            ftd2xx.h
+        HINTS
+            "${_libdir}")
+    mark_as_advanced(LIBNIFALCON_FTD2XX_INCLUDE_DIR)
+
+    set(_deps_check LIBNIFALCON_FTD2XX_LIBRARY LIBNIFALCON_FTD2XX_INCLUDE_DIR)
+else()
     find_library(LIBNIFALCON_LIBUSB1_LIBRARY NAMES libusb-1.0 usb-1.0)
     mark_as_advanced(LIBNIFALCON_LIBUSB1_LIBRARY)
 
@@ -59,7 +73,6 @@ if(NOT WIN32)
     mark_as_advanced(LIBNIFALCON_LIBUSB1_INCLUDE_DIR)
 
     set(_deps_check LIBNIFALCON_LIBUSB1_LIBRARY LIBNIFALCON_LIBUSB1_INCLUDE_DIR)
-
 endif()
 
 include(FindPackageHandleStandardArgs)
@@ -73,7 +86,10 @@ if(LIBNIFALCON_FOUND)
     set(LIBNIFALCON_LIBRARIES "${LIBNIFALCON_LIBRARY}")
     set(LIBNIFALCON_INCLUDE_DIRS "${LIBNIFALCON_INCLUDE_DIR}" "${Boost_INCLUDE_DIR}")
 
-    if(NOT WIN32)
+    if(WIN32)
+        list(APPEND LIBNIFALCON_LIBRARIES "${LIBNIFALCON_FTD2XX_LIBRARY}")
+        list(APPEND LIBNIFALCON_INCLUDE_DIRS "${LIBNIFALCON_FTD2XX_INCLUDE_DIR}")
+    else()
         list(APPEND LIBNIFALCON_LIBRARIES "${LIBNIFALCON_LIBUSB1_LIBRARY}")
         list(APPEND LIBNIFALCON_INCLUDE_DIRS "${LIBNIFALCON_LIBUSB1_INCLUDE_DIR}")
     endif()
