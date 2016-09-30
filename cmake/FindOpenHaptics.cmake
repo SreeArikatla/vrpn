@@ -154,17 +154,6 @@ set(_deps_libs)
 # HDAPI: HD
 ###
 
-if(UNIX)
-	find_library(HDAPI_PHANToMIO_LIBRARY
-		NAMES
-		PHANToMIO
-		HINTS
-		${_libsearchdirs})
-	mark_as_advanced(HDAPI_PHANToMIO_LIBRARY)
-	list(APPEND _deps_check HDAPI_PHANToMIO_LIBRARY)
-	list(APPEND _deps_libs "${HDAPI_PHANToMIO_LIBRARY}")
-endif()
-
 find_path(HDAPI_INCLUDE_DIR
 	NAMES
 	HD/hd.h
@@ -240,6 +229,8 @@ if(OPENHAPTICS_NESTED_TARGETS OR NOT HDAPI_HDU_LIBRARY)
 		src/HDU/src
 		libsrc/HDU
 		HINTS
+	        "${OPENHAPTICS_ROOT_DIR}"
+	        ${_dirs}
 		"${HDAPI_HDU_INCLUDE_DIR}/.."
 		"${HDAPI_HDU_INCLUDE_DIR}/../share/3DTouch")
 	list(APPEND _deps_check HDAPI_HDU_SOURCE_DIR)
@@ -255,7 +246,6 @@ if(OPENHAPTICS_NESTED_TARGETS OR NOT HDAPI_HDU_LIBRARY)
 		set(HDAPI_HDU_LIBRARIES ${HDAPI_HDU_LIBRARY})
 	endif()
 endif()
-
 
 ###
 # HLAPI: HL
@@ -335,6 +325,8 @@ if(OPENHAPTICS_NESTED_TARGETS OR NOT HLAPI_HLU_LIBRARY)
 		src/HLU/src
 		libsrc/HLU
 		HINTS
+	        "${OPENHAPTICS_ROOT_DIR}"
+	        ${_dirs}
 		"${HLAPI_HLU_INCLUDE_DIR}/.."
 		"${HLAPI_HLU_INCLUDE_DIR}/../share/3DTouch")
 	list(APPEND _deps_check HLAPI_HLU_SOURCE_DIR)
