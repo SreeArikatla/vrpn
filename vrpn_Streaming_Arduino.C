@@ -16,7 +16,7 @@
 
 #undef VERBOSE
 
-#define MAX_TCHANNELS 8	
+#define MAX_TCHANNELS 8
 
 // Defines the modes in which the box can find itself.
 #define	STATUS_RESETTING	(-1)	// Resetting the box
@@ -84,7 +84,7 @@ int vrpn_Streaming_Arduino::reset(void)
     // Wait for two seconds to let the device reset itself and then
     // clear the input buffer, both the hardware input buffer and
     // the local input buffer.
-    vrpn_SleepMsecs(2100);
+    //vrpn_SleepMsecs(2100);
     vrpn_flush_input_buffer(serial_fd);
     m_buffer.clear();
 
@@ -119,14 +119,14 @@ int vrpn_Streaming_Arduino::reset(void)
 // the report methods on these. The time stored is that of
 // the first character received as part of the report.  Each time
 // through, it gets however many characters are available.
-// 
+//
 // If we get a report that is not valid, we reset.
 //
 // The routine that calls this one
 // makes sure we get a full reading often enough (ie, it is responsible
 // for doing the watchdog timing to make sure the device hasn't simply
 // stopped sending characters).
-   
+
 int vrpn_Streaming_Arduino::get_report(void)
 {
     unsigned int buttonBits = 0;
@@ -159,8 +159,8 @@ int vrpn_Streaming_Arduino::get_report(void)
     unsigned char buffer[1024];
     timeout.tv_sec = 0;
     timeout.tv_usec = 0;
-    int result = vrpn_read_available_characters(serial_fd, 
-		  buffer, sizeof(buffer)-1, &timeout);    
+    int result = vrpn_read_available_characters(serial_fd,
+		  buffer, sizeof(buffer)-1, &timeout);
     if (result < 0) {
       VRPN_MSG_WARNING("Bad read, resetting");
       reset();
@@ -178,7 +178,7 @@ int vrpn_Streaming_Arduino::get_report(void)
       // Parse the report.
       std::istringstream s(m_buffer.substr(0, cr));
       for (size_t i = 0; i < m_numchannels; i++) {
-        int val = 0;
+        double val = 0;
         char comma;
         s >> val;
         if (s.fail()) {
