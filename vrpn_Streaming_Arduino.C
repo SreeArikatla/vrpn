@@ -102,7 +102,7 @@ int vrpn_Streaming_Arduino::reset(void)
     unsigned char buffer;
     int ret = vrpn_read_available_characters(serial_fd, &buffer, 1, &timeout);
     if (ret != 1) {
-      std::cout << "vrpn_Streaming_Arduino: Could not reset" << std::endl;
+      //std::cout << "vrpn_Streaming_Arduino: Could not reset" << std::endl;
       return -1;
     }
     m_buffer += buffer;
